@@ -1,31 +1,46 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-export default function EmojiResultRow() {
-  return null;
+export default function EmojiResultRow({symbol, title}) {
+  const Touchable = Platform.select({
+    ios: TouchableOpacity,
+    android: TouchableNativeFeedback,
+  });
+
+  return (
+    <Touchable onPress={() => copyToClipboard(symbol)}>
+      <View style={styles.container}>
+        <Text style={styles.symbol}>{symbol}</Text>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+    </Touchable>
+  );
 }
 
-const styles = StyleSheet.create({});
+function copyToClipboard(symbol) {
+  Clipboard.setString(symbol);
+}
 
-// todo replace
-// export default class EmojiResultsRow extends PureComponent {
-//   static propTypes = {
-//     title: PropTypes.string,
-//     symbol: PropTypes.string
-//   };
-
-//   render() {
-//     const codePointHex = this.props.symbol.codePointAt(0).toString(16);
-//     const src = `//cdn.jsdelivr.net/emojione/assets/png/${codePointHex}.png`;
-//     return (
-//       <div
-//         className="component-emoji-result-row copy-to-clipboard"
-//         data-clipboard-text={this.props.symbol}
-//       >
-//         <img alt={this.props.title} src={src} />
-//         <span className="title">{this.props.title}</span>
-//         <span className="info">Click to copy emoji</span>
-//       </div>
-//     );
-//   }
-// }
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  symbol: {
+    fontSize: 40,
+    color: 'black',
+  },
+  title: {
+    marginLeft: 12,
+    fontSize: 18,
+    color: 'grey',
+  },
+});

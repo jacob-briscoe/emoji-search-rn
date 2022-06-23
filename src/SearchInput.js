@@ -1,11 +1,25 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TextInput} from 'react-native';
 
-export default function SearchInput() {
-  return null;
+export default function SearchInput({onSearchInputTextChange}) {
+  return (
+    <TextInput
+      onChangeText={onSearchInputTextChange}
+      autoComplete="off"
+      autoCorrect={false}
+      style={styles.textInput}
+    />
+  );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textInput: {
+    minHeight: 40,
+    borderColor: 'grey',
+    borderWidth: 0.45,
+    borderRadius: 7,
+  },
+});
 
 // todo replace
 // export default class SearchInput extends PureComponent {
